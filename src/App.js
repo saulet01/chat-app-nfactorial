@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import { Container } from "@material-ui/core";
+import "./App.css";
+import themeFile from "./utility/theme";
+import Navbar from "./components/UI/Navbar";
+import MainView from "./components/MainView";
+import { Router } from "@reach/router";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
+const theme = createMuiTheme(themeFile);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <MuiThemeProvider theme={theme}>
+            <Navbar />
+            <Container maxWidth="lg" style={{ marginTop: "80px" }}>
+                <Router>
+                    <MainView path="/" />
+                    <Login path="/login" />
+                    <Register path="/register" />
+                </Router>
+            </Container>
+        </MuiThemeProvider>
+    );
 }
 
 export default App;
