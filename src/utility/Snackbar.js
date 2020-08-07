@@ -8,7 +8,7 @@ function Alert(props) {
 }
 
 const SnackbarNotification = () => {
-    const { snackbar, setSnackbar, snackbarDetails, setsnackbarDetails } = useFirebase();
+    const { snackbar, setSnackbar, snackbarDetails } = useFirebase();
 
     return (
         <div>

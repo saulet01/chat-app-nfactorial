@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Typography, Card, CardContent, Button, Fab } from "@material-ui/core";
+import { Typography, Card, CardContent, Fab } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { useFirebase } from "./firebase/useFirebase";

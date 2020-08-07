@@ -1,8 +1,7 @@
 import React, { Fragment } from "react";
-import { Button, Box, Grid, Card, CardContent, Typography, TextField } from "@material-ui/core";
+import { Button, Grid, Card, CardContent, Typography, TextField } from "@material-ui/core";
 import { useFirebase } from "./firebase/useFirebase";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { useNavigate } from "@reach/router";
 import Autocomplete from "@material-ui/lab/Autocomplete";

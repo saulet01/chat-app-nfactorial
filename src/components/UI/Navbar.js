@@ -22,6 +22,12 @@ const styles = theme => ({
 
 const Navbar = props => {
     const { user, signout } = useFirebase();
+    // const navigate = useNavigate();
+
+    const handleSignOut = () => {
+        signout();
+        window.location.href = "/";
+    };
 
     const navigation = !user ? (
         <Fragment>
@@ -34,7 +40,7 @@ const Navbar = props => {
         </Fragment>
     ) : (
         <Fragment>
-            <Button style={{ color: "#fff" }} onClick={signout}>
+            <Button style={{ color: "#fff" }} onClick={handleSignOut}>
                 Выход
             </Button>
         </Fragment>
