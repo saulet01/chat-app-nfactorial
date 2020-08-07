@@ -15,3 +15,18 @@ hr.rounded {
     border-top: 1px solid #bbb;
     border-radius: 5px;
 }
+
+.message-guest {
+    text-align: left !important;
+    margin-left: auto;
+}
+
+.message-user {
+    text-align: right !important;
+    margin-right: auto;
+}
+
+.isUser {
+    background-color: #406aff !important;
+    color: #fff !important;
+}

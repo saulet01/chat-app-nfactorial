@@ -14,6 +14,8 @@ function useProvideFirebase() {
     const [snackbarDetails, setsnackbarDetails] = React.useState({ message: "", severity: null });
     const [users, setUsers] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
+    const [chatId, setChatId] = React.useState("something");
+    const [messages, setMessages] = React.useState([]);
 
     React.useEffect(() => {
         if (!firebase.apps.length) {
@@ -52,6 +54,36 @@ function useProvideFirebase() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    React.useEffect(() => {
+        console.log(chatId);
+        let unsubscribeChat = firebase
+            .firestore()
+            .collection("chats")
+            .doc(chatId)
+            .collection("messages")
+            .orderBy("date", "desc")
+            .onSnapshot(
+                function(snapshot) {
+                    console.log("Chat Firestore triggered");
+
+                    let temporaryArray = [];
+                    snapshot.docs.forEach(function(doc) {
+                        temporaryArray.push(doc.data());
+                    });
+                    setMessages(temporaryArray);
+                    console.log(temporaryArray);
+                },
+                function(error) {
+                    //...
+                    console.log(error);
+                }
+            );
+
+        return () => {
+            unsubscribeChat();
+        };
+    }, [chatId]);
+
     const register = async (email, password) => {
         setLoading(true);
 
@@ -67,6 +99,16 @@ function useProvideFirebase() {
                 favorites: []
             });
         setLoading(false);
+    };
+
+    const createMessage = async currentMessage => {
+        await firebase
+            .firestore()
+            .collection("chats")
+            .doc(chatId)
+            .collection("messages")
+            .doc()
+            .set(currentMessage);
     };
 
     const handleFavorite = async favoriteUser => {
@@ -148,7 +190,10 @@ function useProvideFirebase() {
         users,
         handleImage,
         handleFavorite,
-        loading
+        loading,
+        createMessage,
+        setChatId,
+        messages
     };
 }
 

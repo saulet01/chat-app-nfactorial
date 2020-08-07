@@ -27,7 +27,7 @@ function App() {
                             <MainView path="/" />
                             <Login path="/login" />
                             <Register path="/register" />
-                            <Messages path="/messages/:Id" />
+                            <Messages path="/messages/:emailId" />
                         </Router>
                     </Container>
                 </ProvideFirebase>

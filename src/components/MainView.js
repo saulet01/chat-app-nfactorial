@@ -4,7 +4,7 @@ import { useFirebase } from "./firebase/useFirebase";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { Link } from "@reach/router";
+import { useNavigate } from "@reach/router";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Profile from "./Profile";
 import Favorites from "./Favorites";
@@ -31,8 +31,9 @@ const styles = theme => ({
 });
 
 export const MainView = props => {
-    const { setSnackbar, users, user, handleFavorite } = useFirebase();
+    const { users, user, handleFavorite, setChatId } = useFirebase();
     const { classes } = props;
+    const navigate = useNavigate();
 
     const handleFavorites = async getFavoriteUser => {
         try {
@@ -40,6 +41,21 @@ export const MainView = props => {
         } catch (err) {
             console.log(err);
         }
+    };
+
+    const handleRedirectRoute = guestEmail => {
+        const currentEmailUser = user ? user.email : "";
+        const beforeSort = `${currentEmailUser}${guestEmail}`;
+        const AfterSort = beforeSort
+            .split("")
+            .sort()
+            .join("");
+
+        setChatId(AfterSort);
+
+        setTimeout(() => {
+            navigate(`/messages/${guestEmail}`);
+        }, 400);
     };
 
     const displayInformation = user ? (
@@ -82,11 +98,9 @@ export const MainView = props => {
                                       <FavoriteBorderIcon color="error" />
                                   </Button>
 
-                                  <Link to={`messages/${userMap.userId}`} style={{ textDecoration: "none" }}>
-                                      <Button color="primary" variant="outlined">
-                                          Написать сообщение
-                                      </Button>
-                                  </Link>
+                                  <Button onClick={() => handleRedirectRoute(userMap.email)} color="primary" variant="outlined">
+                                      Написать сообщение
+                                  </Button>
                               </div>
                           </CardContent>
                       </Card>
